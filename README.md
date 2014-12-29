@@ -1,0 +1,1 @@
+This repo contains a project I've been working on during winter break. I've been home watching YouTube videos on my Chromecast, but I can't watch videos in 2x speed like in my browser natively. This is a work in progress to fix that.

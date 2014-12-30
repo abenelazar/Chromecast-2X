@@ -4,8 +4,7 @@ var progressFlag = 1;
 var mediaCurrentTime = 0;
 var session = null;
 var autoJoinPolicy = 'tab_and_origin_scoped';
-
-
+var mediaInfo = null;
 
 
 
@@ -60,14 +59,17 @@ $(document).ready(function(){
 	  chrome.cast.requestSession(onRequestSessionSuccess, onLaunchError);
 	}
 	
+	
 	function onInitSuccess() {
 		launchApp();
 	}
+	
 	
 	function onRequestSessionSuccess(e){
 		console.log("success");
 		session = e;
 	}
+
 
 	function onError() {
 	  console.log("error");
@@ -78,19 +80,22 @@ $(document).ready(function(){
 	  console.log(message);
 	}
 	
+	
 	function onLaunchError(){
 	  console.log("launch error");		
 	}
 	
+	
 	function onMediaError(e) {
 	  console.log("media error");
 	}
+	
 
 	function loadMedia(){
-		var mediaInfo = new chrome.cast.media.MediaInfo('http://pngimg.com/upload/cat_PNG113.png', 'image/png');
+		mediaInfo = new chrome.cast.media.MediaInfo('http://www.nasa.gov/downloadable/videos/noaas_goes-east_satellite_shows_storm_systems.mp4', 'video/mp4');
 		mediaInfo.metadata = new chrome.cast.media.PhotoMediaMetadata();
 		mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.PHOTO;
-		mediaInfo.contentType = 'image/png';
+		mediaInfo.contentType = 'video/mp4';
 		var request = new chrome.cast.media.LoadRequest(mediaInfo);
 		session.loadMedia(request,onMediaDiscovered.bind(this, 'loadMedia'), onMediaError.bind(this));
 
@@ -101,7 +106,13 @@ $(document).ready(function(){
 	$('#castme').click(function(e){
 		loadMedia();
 	});
-		
+
+
 
 	
 });
+
+	function speed(x){
+  		session.playbackRate=x;
+		$('#pbrate').html(x);
+	}		
